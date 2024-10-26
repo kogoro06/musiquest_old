@@ -1,0 +1,27 @@
+<h2 class="text-xl font-semibold mb-4">比較表</h2>
+<table class="table-auto w-full mb-6">
+  <thead>
+    <tr>
+      <th class="px-4 py-2">項目</th>
+      <th class="px-4 py-2">あなた</th>
+      <th class="px-4 py-2"><%= @closest_artist %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="border px-4 py-2">ピッチ</td>
+      <td class="border px-4 py-2"><%= @pitch_value %></td>
+      <td class="border px-4 py-2"><%= @artist_pitch %></td>
+    </tr>
+    <tr>
+      <td class="border px-4 py-2">エネルギー</td>
+      <td class="border px-4 py-2"><%= @energy_value %></td>
+      <td class="border px-4 py-2"><%= @artist_energy %></td>
+    </tr>
+    <tr>
+      <td class="border px-4 py-2">トーン</td>
+      <td class="border px-4 py-2"><%= @tone_value %></td>
+      <td class="border px-4 py-2"><%= @artist_tone %></td>
+    </tr>
+  </tbody>
+</table>

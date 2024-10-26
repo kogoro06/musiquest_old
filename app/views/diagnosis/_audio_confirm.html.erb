@@ -1,0 +1,45 @@
+<h1 class="text-3xl font-bold mb-6">音声確認</h1>
+
+<audio id="userVoice" controls>
+  <source src="<%= url_for(audio_file.file) %>" type="audio/webm">
+  Your browser does not support the audio element.
+</audio>
+<button id="okButton">OK</button>
+
+<canvas id="voiceQualityChart"></canvas>
+
+<script>
+  document.getElementById('okButton').addEventListener('click', function() {
+      // 声質特徴を取得するAPIを呼び出す
+      fetch('/path/to/voice_quality_api') // 音声特徴抽出APIのエンドポイントを指定
+          .then(response => response.json())
+          .then(data => {
+              // グラフ描画関数を呼び出す
+              displayChart(data); // 取得したデータを引数に渡す
+          });
+  });
+
+  function displayChart(data) {
+      const ctx = document.getElementById('voiceQualityChart').getContext('2d');
+      new Chart(ctx, {
+          type: 'bar',
+          data: {
+              labels: ['Feature 1', 'Feature 2', 'Feature 3'], // 適切なラベルに変更
+              datasets: [{
+                  label: 'Voice Quality Features',
+                  data: data, // APIから取得したデータを使用
+                  backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+              }]
+          },
+          options: {
+              scales: {
+                  y: {
+                      beginAtZero: true
+                  }
+              }
+          }
+      });
+  }
+</script>

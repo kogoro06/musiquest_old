@@ -1,0 +1,9 @@
+<nav class="flex space-x-8 text-lg">
+  <% if user_signed_in? %>
+    <%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, class: 'text-center text-gray-600 font-bold text-gray-400' %>
+  <% else %>
+    <%= link_to 'ログイン', new_user_session_path, class: 'text-center text-gray-600 font-bold' %>
+    <%= link_to '新規登録', new_user_registration_path, class: 'text-center text-gray-600 font-bold' %>
+    <%= link_to 'パスワード再発行', new_user_password_path, class: 'text-center text-gray-600 font-bold' %>
+  <% end %>
+</nav>

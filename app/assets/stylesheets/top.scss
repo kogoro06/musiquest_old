@@ -1,0 +1,51 @@
+.image-cover {
+  background-image: url("/assets/top.png"); /* イメージカバーとしての背景画像 */
+  height: calc(100vh - 134px); /* ヘッダーの高さを考慮した高さ */
+  background-position: center;
+  background-size: cover; /* 背景画像をカバーする */
+  display: flex; /* Flexboxを使用 */
+  align-items: center; /* 垂直中央寄せ */
+  justify-content: center; /* 水平中央寄せ */
+  position: relative; /* 相対位置 */
+}
+
+.top-inner-text {
+  position: absolute; /* 絶対位置 */
+  text-align: center; /* テキスト中央寄せ */
+  color: white; /* テキスト色 */
+  font-size: 3rem; /* フォントサイズ */
+}
+
+@media screen and (max-width: 767px) {
+  .top-inner-text {
+    font-size: 2rem; /* モバイル用フォントサイズ */
+  }
+}
+
+/* フレックスボックスでの全体レイアウト設定 */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* フッターを固定表示する */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  background-color: white;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* メインコンテンツがヘッダーとフッターに隠れないように余白を追加 */
+body {
+  padding-top: 80px; /* ヘッダーの高さ分の余白 */
+  padding-bottom: 60px; /* フッターの高さ分の余白（高さが60pxの場合） */
+}
