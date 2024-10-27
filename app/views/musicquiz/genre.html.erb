@@ -3,11 +3,14 @@
   <div class="bg-white p-8 rounded shadow-md w-full max-w-sm text-black">
     <h1 class="text-2xl font-semibold mb-6">ジャンルを選んでください</h1>
 
+<div class="flex justify-between mb-4">
     <div class="flex justify-between mb-4">
-      <%= link_to "J-Pop", musicquiz_genre_jpop_path, class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-1 text-center" %>
-      <%= link_to "K-Pop", musicquiz_genre_kpop_path, class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-1 text-center" %>
-      <%= link_to "Hip Hop", musicquiz_genre_hiphop_path, class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-1 text-center" %>
-      <%= link_to "アニメ/特撮", musicquiz_genre_anime_path, class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-1 text-center" %>
+        <%= link_to "J-Pop", musicquiz_play_path(genre: 'jpop'), class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-1 text-center" %>
+        <%= link_to "K-Pop", musicquiz_play_path(genre: 'kpop'), class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-1 text-center" %>
+        <%= link_to "Hip Hop", musicquiz_play_path(genre: 'hiphop'), class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-1 text-center" %>
+        <%= link_to "アニメ/特撮", musicquiz_play_path(genre: 'アニメ'), class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-1 text-center" %>
+</div>
+
     </div>
   </div>
 </div>

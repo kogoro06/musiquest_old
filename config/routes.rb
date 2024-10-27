@@ -14,19 +14,20 @@ Rails.application.routes.draw do
   get "musicquiz/ranking", to: "musicquiz#ranking"
   get "musicquiz/playlist", to: "musicquiz#playlist"
 
-  # ジャンル別のルート設定
-  get 'musicquiz/genre/jpop', to: 'musicquiz#genre_jpop', as: :musicquiz_genre_jpop
-  get 'musicquiz/genre/kpop', to: 'musicquiz#genre_kpop', as: :musicquiz_genre_kpop
-  get 'musicquiz/genre/hiphop', to: 'musicquiz#genre_hiphop', as: :musicquiz_genre_hiphop
-  get 'musicquiz/genre/anime', to: 'musicquiz#genre_anime', as: :musicquiz_genre_anime
-  get 'musicquiz/genre/anime/play', to: 'musicquiz#play_anime', as: :musicquiz_play_anime
+  # ジャンル別クイズページのルート（汎用化したplayルート）
+  get 'musicquiz/play/:genre', to: 'musicquiz#play', as: :musicquiz_play
 
-  post 'musicquiz/check_answer/:id', to: 'musicquiz#check_answer', as: 'check_answer'
+  # クイズの結果を表示するアクション
+  get 'musicquiz/genre/anime/result', to: 'musicquiz#show_result', as: :show_result
 
-  # Spotifyのコールバックルート
-  get '/auth/spotify/callback', to: 'users#spotify'
-
-  # Defines the root path route ("/")
-  root "static_pages#top"
+  # Spotify認証のルート
+  get '/auth/spotify', to: 'musicquiz#callback'
+  get '/auth/spotify/callback', to: 'musicquiz#callback'
+  get 'final_results', to: 'musicquiz#final_results', as: :final_results
+  
+  # Deviseのルート設定
   devise_for :users
+
+  # ルートパス設定
+  root "static_pages#top"
 end

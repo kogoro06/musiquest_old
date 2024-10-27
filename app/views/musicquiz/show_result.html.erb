@@ -1,0 +1,37 @@
+<div class="h-screen flex flex-col justify-center items-center text-center bg-customblue">
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-md text-black mb-8">
+    <h1 class="text-2xl font-semibold mb-6">こたえ</h1>
+
+    <% if @is_correct %>
+      <p class="text-lg mb-4 text-green-600">おめでとうございます、正解です！</p>
+    <% else %>
+      <p class="text-lg mb-4 text-red-600">残念、不正解です。選択した曲は "<%= @selected_answer %>" です。</p>
+    <% end %>
+
+    <div class="album-info mb-6">
+      <p class="text-lg mb-2">正解の曲名: <%= @correct_answer_name || '不明' %></p>
+      <p class="text-lg mb-4">アーティスト: <%= @correct_answer_artist || '不明' %></p>
+
+      <% if @correct_answer_album_image.present? %>
+        <img src="<%= @correct_answer_album_image %>" alt="アルバムカバー" class="mb-4 w-32 h-32 object-cover">
+      <% end %>
+
+      <% if @correct_answer_preview_url.present? %>
+        <p class="text-lg mb-2">曲を再生してみましょう:</p>
+        <audio controls class="mb-4">
+          <source src="<%= @correct_answer_preview_url %>" type="audio/mpeg">
+          お使いのブラウザではオーディオ要素がサポートされていません。
+        </audio>
+      <% else %>
+        <p class="text-lg mb-4">この曲のプレビューは利用できません。</p>
+      <% end %>
+    </div>
+
+    <!-- 次の問題またはクイズ結果へのリンク -->
+    <% if session[:current_question] <= 10 %>
+      <%= link_to "次の問題に進む", musicquiz_play_path(genre: session[:genre]), class: "bg-blue-500 text-white py-2 px-4 rounded mt-4" %>
+    <% else %>
+      <%= link_to "クイズ結果を表示", final_results_path, class: "bg-green-500 text-white py-2 px-4 rounded mt-4" %>
+    <% end %>
+  </div>
+</div>
