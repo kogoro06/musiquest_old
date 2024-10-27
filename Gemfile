@@ -61,3 +61,8 @@ gem "sassc-rails"
 gem "devise"
 gem 'devise-i18n'
 gem 'devise-i18n-views'
+gem 'dotenv-rails'
+gem 'rest-client'
+gem 'omniauth'
+gem 'omniauth-spotify'
+gem 'rspotify'

@@ -1,0 +1,15 @@
+<div class="h-screen flex flex-col justify-center items-center text-center bg-customblue">
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-sm text-black">
+    <h1 class="text-2xl font-semibold mb-6">アニメ/特撮</h1>
+    
+    <!-- クイズを始めるボタン -->
+    <div class="mb-4">
+        <%= link_to "クイズを始める", musicquiz_play_anime_path, class: "bg-blue-500 text-white py-2 px-4 rounded" %>
+    </div>
+
+    <!-- 正解数ランキングへのリンク -->
+    <div>
+      <%= link_to "正解数ランキング（アニメ/特撮）", musicquiz_ranking_path, class: "bg-green-500 text-white py-2 px-4 rounded" %>
+    </div>
+  </div>
+</div>

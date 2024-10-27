@@ -1,0 +1,16 @@
+<div class="h-screen flex flex-col justify-center items-center text-center bg-customblue">
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-sm text-black">
+    <h1 class="text-2xl font-semibold mb-6">アニメ/特撮クイズ</h1>
+
+    <% if @quiz_question && @quiz_question.any? %>
+      <p class="text-lg">曲名: <%= @quiz_question.first[:name] %></p>
+      <p class="text-lg">アーティスト: <%= @quiz_question.first[:artist] %></p>
+      <img src="<%= @quiz_question.first[:album_image] %>" alt="Album Cover" class="mb-4" />
+      <button class="bg-blue-500 text-white py-2 px-4 rounded" id="play-button" data-url="<%= @quiz_question.first[:preview_url] %>">
+        再生
+      </button>
+    <% else %>
+      <p class="text-lg">問題が取得できませんでした。再試行してください。</p>
+    <% end %>
+  </div>
+</div>
