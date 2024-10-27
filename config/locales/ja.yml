@@ -1,0 +1,14 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      book: 投稿
+    attributes:
+      user: 
+        name: 名前 
+        email: Eメール
+        password: パスワード
+        introduction: 自己紹介文
+      book:
+        title: タイトル
+        body: 内容

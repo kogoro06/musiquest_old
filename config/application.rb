@@ -24,5 +24,6 @@ module HARMONAI
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.action_dispatch.cookies_same_site_protection = :strict
   end
 end
