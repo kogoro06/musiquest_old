@@ -1,16 +1,57 @@
 <div class="h-screen flex flex-col justify-center items-center text-center bg-customblue">
-  <div class="bg-white p-8 rounded shadow-md w-full max-w-sm text-black">
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-md text-black mb-8">
     <h1 class="text-2xl font-semibold mb-6">アニメ/特撮クイズ</h1>
 
-    <% if @quiz_question && @quiz_question.any? %>
-      <p class="text-lg">曲名: <%= @quiz_question.first[:name] %></p>
-      <p class="text-lg">アーティスト: <%= @quiz_question.first[:artist] %></p>
-      <img src="<%= @quiz_question.first[:album_image] %>" alt="Album Cover" class="mb-4" />
-      <button class="bg-blue-500 text-white py-2 px-4 rounded" id="play-button" data-url="<%= @quiz_question.first[:preview_url] %>">
-        再生
-      </button>
+    <% if @quiz_question.present? %>
+      <p class="text-lg mb-4">この曲のタイトルは？</p>
+      
+      <!-- アルバムカバー画像の表示 -->
+      <img src="<%= @correct_answer_album_image %>" alt="Album Cover" class="mb-4" width="300">
+
+      <!-- オーディオの再生部分 -->
+      <% if @correct_answer_preview_url.present? %>
+        <p class="text-lg mb-2">曲を再生してみましょう:</p>
+        <audio controls class="mb-4">
+          <source src="<%= @correct_answer_preview_url %>" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+      <% else %>
+        <p class="text-lg mb-4">この曲のプレビューは利用できません。</p>
+      <% end %>
+
+      <!-- クイズの選択肢表示部分 -->
+      <div id="quiz-options" class="mb-6">
+        <p class="text-lg mb-4">この曲のタイトルはどれでしょうか？</p>
+        <% if @options.present? %>
+          <% @options.each do |option| %>
+            <button class="bg-blue-500 text-white py-2 px-4 rounded mb-2" onclick="checkAnswer('<%= option %>')">
+              <%= option %>
+            </button>
+          <% end %>
+        <% else %>
+          <p class="text-lg">選択肢が見つかりませんでした。</p>
+        <% end %>
+      </div>
+
+      <!-- 正解の曲名を保持する隠しフィールド -->
+      <input type="hidden" id="correct-answer" value="<%= @correct_answer_name %>">
     <% else %>
-      <p class="text-lg">問題が取得できませんでした。再試行してください。</p>
+      <p class="text-lg">クイズの問題が見つかりませんでした。再試行してください。</p>
     <% end %>
   </div>
 </div>
+
+<script>
+  function checkAnswer(selectedAnswer) {
+    var correctAnswer = document.getElementById('correct-answer').value;
+    if (selectedAnswer === correctAnswer) {
+      alert("正解です！");
+    } else {
+      alert("残念、不正解です。正解は " + correctAnswer + " でした。");
+    }
+  }
+</script>
+
+<footer class="w-full bg-gray-800 text-white text-center py-4 mt-auto">
+  <p>© 2024 アニメクイズ - All Rights Reserved.</p>
+</footer>
