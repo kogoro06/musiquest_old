@@ -2,7 +2,7 @@ require 'rest-client'
 require 'json'
 
 class MusicquizController < ApplicationController
-  before_action :refresh_spotify_token, only: [:play, :start, :user_info]
+  before_action :refresh_spotify_token, only: [:play, :start]
 
   # Spotify認証後のコールバック
   def callback
@@ -55,15 +55,31 @@ class MusicquizController < ApplicationController
       render :play and return
     end
   end
-  def show_result
-    correct_answer = session[:correct_answer]
-    @selected_answer = params[:selected_answer]
-    @is_correct = QuizHelper.check_answer(@selected_answer, correct_answer)
-
-    session[:correct_count] += 1 if @is_correct
-    session[:current_question] += 1
+  class MusicquizController < ApplicationController
+    def show_result
+      correct_answer = session[:correct_answer]
+      if correct_answer.nil?
+        redirect_to musicquiz_start_path, alert: "正解データが見つかりませんでした。再度プレイしてください。"
+        return
+      end
+  
+      @selected_answer = params[:selected_answer]
+      @is_correct = QuizHelper.check_answer(@selected_answer, correct_answer)
+  
+      # 正解情報をインスタンス変数に設定
+      @correct_answer_name = correct_answer[:name]
+      @correct_answer_artist = correct_answer[:artist]
+      @correct_answer_album_image = correct_answer[:album_image]
+      @correct_answer_preview_url = correct_answer[:preview_url]
+  
+      # 正解数と問題数を更新
+      session[:correct_count] ||= 0
+      session[:correct_count] += 1 if @is_correct
+      session[:current_question] ||= 1
+      session[:current_question] += 1
+    end
   end
-
+  
   def final_results
     @correct_count = session[:correct_count]
     QuizHelper.reset_quiz(session) # 引数を追加

@@ -21,4 +21,8 @@ module QuizHelper
       options: options
     }
   end
+  def self.check_answer(selected_answer, correct_answer)
+    return false if correct_answer.nil? # correct_answerがnilの場合にfalseを返す
+    selected_answer == correct_answer[:name]
+  end
 end
