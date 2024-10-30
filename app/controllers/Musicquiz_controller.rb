@@ -1,4 +1,5 @@
 class MusicquizController < ApplicationController
+  include SpotifyTokenManager
 
   def index
     @questions = MusicQuestion.all
@@ -10,30 +11,29 @@ class MusicquizController < ApplicationController
   end
 
   def genre
-    # このメソッドに必要な処理を追加
+    # ジャンルに応じた処理を実装
   end
 
   def era
-    # 必要な処理を追加
-  end
-  def ranking
-    # Spotify APIからTop 50とViral 50のデータを取得
-    @top_tracks = SpotifyService.get_top_tracks
-    @viral_tracks = SpotifyService.get_viral_tracks
-  end
-  def play_from_playlist
-    playlist_id = params[:playlist_id]
-    @tracks = SpotifyService.get_tracks_from_playlist(playlist_id) # プレイリストから楽曲を取得
-  
-    # あなたのロジックに従って問題を出題する処理を追加します
-  end
-  def correct_tracks
-    @correct_tracks = session[:correct_tracks] || [] # セッションから正解した曲のリストを取得
+    # 年代に応じた処理を実装
   end
 
   def ranking
-    # ここでは、ランキングのデータを取得するロジックを追加します
-    @rankings = [] # ここにランキングデータを設定
+    @top_tracks = SpotifyService.get_top_tracks
+    @viral_tracks = SpotifyService.get_viral_tracks
+  end
+
+  def play_from_playlist
+    playlist_id = params[:playlist_id]
+    @tracks = SpotifyService.get_tracks_from_playlist(playlist_id)
+  end
+
+  def correct_tracks
+    @correct_tracks = session[:correct_tracks] || []
+  end
+
+  def user_ranking
+    @user_rankings = [] # ユーザーのランキングデータを設定
   end
 
   def online_mode

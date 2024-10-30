@@ -20,6 +20,13 @@ Rails.application.routes.draw do
   get "musicquiz/user_rankings", to: "musicquiz#user_rankings", as: :musicquiz_user_rankings
   get "musicquiz/online_mode", to: "musicquiz#online_mode", as: :musicquiz_online_mode
 
+  # 音楽ジャンルのルーティング
+  get "genre/play/jpop", to: "genre#play_jpop", as: :genre_play_jpop
+  get "genre/play/kpop", to: "genre#play_kpop", as: :genre_play_kpop
+  get "genre/play/westernmusic", to: "genre#play_westernmusic", as: :genre_play_westernmusic
+  get "genre/play/hiphop", to: "genre#play_hiphop", as: :genre_play_hiphop
+  get "genre/play/anime", to: "genre#play_anime", as: :genre_play_anime
+
   devise_for :users
 
   root "static_pages#top"

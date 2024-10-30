@@ -55,27 +55,17 @@ end
     Rails.logger.debug("show_result - 更新後の問題番号: #{session[:current_question]}")
   end
 
-  def callback
-    code = params[:code]
-    response = HTTParty.post("https://accounts.spotify.com/api/token", {
-      body: {
-        grant_type: 'authorization_code',
-        code: code,
-        redirect_uri: "http://localhost:3000/callback",
-        client_id: ENV['SPOTIFY_CLIENT_ID'],
-        client_secret: ENV['SPOTIFY_CLIENT_SECRET']
-      },
-      headers: { 'Content-Type' => 'application/x-www-form-urlencoded' }
-    })
-    
-    if response.success?
-      session[:spotify_token] = response.parsed_response["access_token"]
-      session[:spotify_refresh_token] = response.parsed_response["refresh_token"]
-      session[:spotify_token_expires_at] = Time.now + response.parsed_response["expires_in"].to_i
-      redirect_to root_path, notice: "Spotifyにログインしました。"
-    else
-      flash[:alert] = "Spotifyの認証に失敗しました。"
-      redirect_to new_user_session_path
+  private
+
+  def refresh_spotify_token
+    if session[:spotify_token_expires_at] && Time.now > session[:spotify_token_expires_at]
+      token_data = SpotifyService.refresh_access_token(session[:spotify_refresh_token])
+      if token_data
+        session[:spotify_token] = token_data[:access_token]
+        session[:spotify_token_expires_at] = Time.now + token_data[:expires_in].to_i
+      else
+        redirect_to '/auth/spotify', alert: "Spotify認証が必要です。" and return
+      end
     end
   end
 end
