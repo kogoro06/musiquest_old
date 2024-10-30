@@ -5,7 +5,7 @@
     <% if @is_correct %>
       <p class="text-lg mb-4 text-green-600">おめでとうございます、正解です！</p>
     <% else %>
-      <p class="text-lg mb-4 text-red-600">残念、不正解です。選択した曲は "<%= @selected_answer %>" です。</p>
+      <p class="text-lg mb-4 text-red-600">残念、不正解です。正解の曲は "<%= @correct_answer[:name] %>" です。</p>
     <% end %>
 
     <div class="album-info mb-6">

@@ -2,6 +2,7 @@
   <div class="bg-white p-8 rounded shadow-md w-full max-w-md text-black mb-8">
 <h1 class="text-2xl font-semibold mb-6">アニメ/特撮クイズ</h1>
 
+<!-- play.html.erb または show_result.html.erb -->
 <% if @correct_answer && @correct_answer[:preview_url].present? %>
   <p class="text-lg mb-2">曲を再生してみましょう:</p>
   <audio controls class="mb-4">

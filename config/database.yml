@@ -13,6 +13,7 @@
 # gem "pg"
 #
 default: &default
+ default: &default
   adapter: postgresql
   encoding: unicode
   # For details on connection pooling, see Rails configuration guide
@@ -21,7 +22,6 @@ default: &default
   host: db
   username: postgres
   password: password
-
 
 development:
   <<: *default
@@ -85,7 +85,7 @@ production:
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: harmonai-db.flycast # Fly.ioのデータベースホスト名を設定
+  host: musiquest-db.flycast # Fly.ioのデータベースホスト名を設定
   port: 3000
   database: myapp_production
   username: postgres
