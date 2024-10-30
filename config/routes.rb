@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get "sessions/new"
+  get "sessions/create"
   # 既存のルート設定
   get "introduce/index"
   get "homes/top"
@@ -18,8 +20,8 @@ Rails.application.routes.draw do
   get 'musicquiz/play/:genre', to: 'musicquiz#play', as: :musicquiz_play
 
   # Spotify認証のルート
-  get '/auth/spotify', to: 'musicquiz#callback'
-  get '/auth/spotify/callback', to: 'musicquiz#callback'
+  get '/auth/spotify', to: 'sessions#new'  # 認証を開始するルート
+  get '/auth/spotify/callback', to: 'sessions#create'  # 認証後に戻ってくるルート
 
   # クイズの開始、結果、ユーザー情報関連のルート
   get 'musicquiz/setup_new_question', to: 'musicquiz#setup_new_question'
