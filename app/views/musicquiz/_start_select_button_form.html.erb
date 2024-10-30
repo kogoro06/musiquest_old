@@ -1,0 +1,21 @@
+<div>
+  <div class="flex justify-between mb-4">
+    <%= link_to "ジャンルで選ぶ", musicquiz_genre_path, class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-2 text-center" %>
+    <%= link_to "年代で選ぶ", musicquiz_era_path, class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-2 text-center" %>
+    <%= link_to "ランキングから出題", musicquiz_ranking_path, class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-2 text-center" %>
+    <%= link_to "プレイリストから出題", musicquiz_playlist_path, class: "bg-blue-500 text-white py-2 px-4 rounded flex-grow mx-2 text-center" %>
+  </div>
+
+  <!-- 正解した楽曲プレイリストとランキングのフォーム -->
+  <div class="flex justify-around mb-4">
+    <div class="flex-grow mx-2 text-center">
+      <%= link_to "正解した曲リスト", musicquiz_correct_tracks_path, class: "bg-green-500 text-white py-2 px-4 rounded" %>
+    </div>
+    <div class="flex-grow mx-2 text-center">
+      <%= link_to "ランキング", musicquiz_user_rankings_path, class: "bg-green-500 text-white py-2 px-4 rounded" %>
+    </div>
+    <div class="flex-grow mx-2 text-center">
+      <%= link_to "オンライン対戦モード", musicquiz_online_battle_path, class: "bg-green-500 text-white py-2 px-4 rounded" %>
+    </div>
+  </div>
+</div>

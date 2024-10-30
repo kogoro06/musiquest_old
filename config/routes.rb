@@ -1,13 +1,12 @@
 Rails.application.routes.draw do
   get "sessions/new"
   get "sessions/create"
-  # 既存のルート設定
+
   get "introduce/index"
   get "homes/top"
   get "static_pages/top"
   get 'introduce', to: 'introduce#index', as: :introduce
 
-  # Musicquiz関連のルート
   get "musicquiz/start", to: "musicquiz#start", as: :musicquiz_start
   get "musicquiz/genre", to: "musicquiz#genre", as: :musicquiz_genre
   get "musicquiz/work", to: "musicquiz#work", as: :musicquiz_work
@@ -15,15 +14,13 @@ Rails.application.routes.draw do
   get "musicquiz/era", to: "musicquiz#era", as: :musicquiz_era
   get "musicquiz/ranking", to: "musicquiz#ranking", as: :musicquiz_ranking
   get "musicquiz/playlist", to: "musicquiz#playlist", as: :musicquiz_playlist
-  get 'musicquiz/play/:genre', to: 'musicquiz#play', as: :musicquiz_play
+  get "musicquiz/online_battle", to: "musicquiz#online_battle", as: :musicquiz_online_battle
 
-  # お気に入り登録機能のルート
+  get "musicquiz/correct_tracks", to: "musicquiz#correct_tracks", as: :musicquiz_correct_tracks
+  get "musicquiz/user_rankings", to: "musicquiz#user_rankings", as: :musicquiz_user_rankings
+  get "musicquiz/online_mode", to: "musicquiz#online_mode", as: :musicquiz_online_mode
 
-  # 登録機能のルート
-
-  # Deviseのルート設定
   devise_for :users
 
-  # ルートパス設定
   root "static_pages#top"
 end

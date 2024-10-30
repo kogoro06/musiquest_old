@@ -1,0 +1,15 @@
+<div class="h-screen flex flex-col justify-center items-center text-center bg-customblue">
+  <div class="bg-white p-8 rounded shadow-md text-black">
+    <h1 class="text-2xl font-semibold mb-6" style="font-size: calc(1rem + 1vw);">あなたのプレイリストから出題</h1>
+
+    <% if @playlists.present? %>
+      <div class="flex flex-col mb-4">
+        <% @playlists.each do |playlist| %>
+          <%= link_to playlist.name, musicquiz_play_from_playlist_path(playlist.id), class: "bg-blue-500 text-white py-2 px-4 rounded mb-2" %>
+        <% end %>
+      </div>
+    <% else %>
+      <p>本リリースで追加予定</p>
+    <% end %>
+  </div>
+</div>

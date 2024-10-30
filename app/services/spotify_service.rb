@@ -1,43 +1,63 @@
+require 'httparty'
 class SpotifyService
+  BASE_URL = "https://api.spotify.com/v1"
+
   def self.get_spotify_tracks(genres)
-    genre_queries = {
-      'アニメ' => ERB::Util.url_encode('アニメ OR anime'),
-      'ディズニー' => ERB::Util.url_encode('ディズニー OR disney'),
-      '特撮' => ERB::Util.url_encode('仮面ライダー OR スーパー戦隊 OR ウルトラマン OR tokusatsu')
-    }
+    # 省略: 既存のジャンルクエリなどを設定
 
-    tracks = genres.flat_map do |genre|
-      query = genre_queries[genre]
-      next [] unless query
+    # Spotify APIを呼び出してトラックを取得するロジックを実装
+  end
 
-      begin
-        Rails.logger.debug("Spotify APIリクエスト - ジャンル: #{genre}, クエリ: #{query}")
-        results = RSpotify::Track.search(query, limit: 50, market: 'JP').map do |track|
-          {
-            name: track.name,
-            artist: track.artists.first.name,
-            preview_url: track.preview_url,
-            album_image: track.album.images.first['url'],
-            popularity: track.popularity
-          }
-        end
-
-        Rails.logger.debug("Spotify API検索結果 - ジャンル: #{genre}, プレビューURLあり: #{results.count { |track| track[:preview_url].present? }}曲, 全結果数: #{results.size}")
-        results
-      rescue RestClient::ExceptionWithResponse => e
-        Rails.logger.error("Spotify APIエラー - ジャンル: #{genre}, エラー: #{e.response}")
-        []
-      end
+  def self.get_top_tracks
+    # Spotify APIを呼び出してTop 50のデータを取得する処理
+    response = HTTParty.get("#{BASE_URL}/charts/top", headers: { "Authorization" => "Bearer #{access_token}" })
+    
+    if response.success?
+      return response.parsed_response["tracks"]
+    else
+      Rails.logger.error("Failed to fetch top tracks: #{response.body}")
+      return []
     end
+  end
 
-    # プレビューURLがあるトラックを優先して選択し、人気順にソート
-    tracks_with_preview = tracks.select { |track| track[:preview_url].present? }
-    if tracks_with_preview.size < 4
-      Rails.logger.warn("取得できたプレビューURL付きのトラック数が少ないため、すべてのトラックを含めてソートします。")
-      return tracks.sort_by { |track| -track[:popularity] }
+  def self.get_viral_tracks
+    # Spotify APIを呼び出してViral 50のデータを取得する処理
+    response = HTTParty.get("#{BASE_URL}/charts/viral", headers: { "Authorization" => "Bearer #{access_token}" })
+    
+    if response.success?
+      return response.parsed_response["tracks"]
+    else
+      Rails.logger.error("Failed to fetch viral tracks: #{response.body}")
+      return []
     end
+  end
 
-    # プレビューURLがあるトラックに絞り、人気順でソート
-    tracks_with_preview.sort_by { |track| -track[:popularity] }
+  private
+
+  def self.access_token
+    # Spotifyのアクセストークンを取得するためのメソッドを実装
+    # 省略: 実装方法によって異なる
+  end
+
+  def self.get_user_playlists(user)
+    RSpotify::User.find(user.spotify_user_id).playlists
+  rescue StandardError => e
+    Rails.logger.error("Spotify APIエラー - プレイリスト取得時: #{e.message}")
+    []
+  end
+  def self.get_tracks_from_playlist(playlist_id)
+    playlist = RSpotify::Playlist.find(playlist_id)
+    playlist.tracks.map do |track|
+      {
+        name: track.name,
+        artist: track.artists.first.name,
+        preview_url: track.preview_url,
+        album_image: track.album.images.first['url'],
+        popularity: track.popularity
+      }
+    end
+  rescue StandardError => e
+    Rails.logger.error("Spotify APIエラー - プレイリストのトラック取得時: #{e.message}")
+    []
   end
 end

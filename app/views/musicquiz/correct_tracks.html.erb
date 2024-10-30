@@ -1,0 +1,24 @@
+<div class="h-screen flex flex-col justify-center items-center text-center bg-customblue">
+  <div class="bg-white p-8 rounded shadow-md w-full max-w-lg text-black">
+    <h1 class="text-2xl font-semibold mb-6" style="font-size: calc(1rem + 1vw);">正解した曲リスト</h1>
+
+    <% if @correct_tracks.any? %>
+      <div class="grid grid-cols-1 gap-4">
+        <% @correct_tracks.each do |track| %>
+          <div class="flex items-center p-4 border rounded-lg bg-gray-100 hover:bg-gray-200 transition duration-300">
+            <div class="flex-grow">
+              <strong><%= track[:name] %></strong> by <%= track[:artist] %>
+            </div>
+            <% if track[:preview_url].present? %>
+              <%= link_to "試聴", track[:preview_url], target: "_blank", class: "text-blue-500 underline ml-4" %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p class="text-gray-500 my-4">まだ正解した曲がありません。</p>
+    <% end %>
+
+    <%= render 'back_link' %> <!-- ここでパーシャルを呼び出します -->
+  </div>
+</div>
