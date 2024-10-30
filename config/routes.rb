@@ -9,26 +9,16 @@ Rails.application.routes.draw do
 
   # Musicquiz関連のルート
   get "musicquiz/start", to: "musicquiz#start", as: :musicquiz_start
-  get "musicquiz/genre", to: "musicquiz#genre"
-  get "musicquiz/work", to: "musicquiz#work"
-  get "musicquiz/artist", to: "musicquiz#artist"
-  get "musicquiz/era", to: "musicquiz#era"
-  get "musicquiz/ranking", to: "musicquiz#ranking"
-  get "musicquiz/playlist", to: "musicquiz#playlist"
+  get "musicquiz/genre", to: "musicquiz#genre", as: :musicquiz_genre
+  get "musicquiz/work", to: "musicquiz#work", as: :musicquiz_work
+  get "musicquiz/artist", to: "musicquiz#artist", as: :musicquiz_artist
+  get "musicquiz/era", to: "musicquiz#era", as: :musicquiz_era
+  get "musicquiz/ranking", to: "musicquiz#ranking", as: :musicquiz_ranking
+  get "musicquiz/playlist", to: "musicquiz#playlist", as: :musicquiz_playlist
 
-  # ジャンル別クイズページのルート（汎用化したplayルート）
-  get 'musicquiz/play/:genre', to: 'musicquiz#play', as: :musicquiz_play
+  # お気に入り登録機能のルート
 
-  # Spotify認証のルート
-  get '/auth/spotify', to: 'sessions#new'  # 認証を開始するルート
-  get '/auth/spotify/callback', to: 'sessions#create'  # 認証後に戻ってくるルート
-
-  # クイズの開始、結果、ユーザー情報関連のルート
-  get 'musicquiz/setup_new_question', to: 'musicquiz#setup_new_question'
-  get '/musicquiz/play', to: 'musicquiz#play'
-  get '/musicquiz/result', to: 'musicquiz#show_result',as: :show_result
-  get '/musicquiz/final_results', to: 'musicquiz#final_results', as: :final_results
-  get '/musicquiz/user_info', to: 'musicquiz#user_info'
+  # 登録機能のルート
 
   # Deviseのルート設定
   devise_for :users
