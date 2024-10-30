@@ -1,10 +1,10 @@
 <div class="h-screen flex flex-col justify-center items-center text-center bg-customblue">
   <div class="bg-white p-8 rounded shadow-md w-full max-w-md text-black mb-8">
-<h1 class="text-2xl font-semibold mb-6">アニメ/特撮クイズ</h1>
+<h1 class="text-2xl font-semibold mb-6">アニメ/特撮イントロクイズ</h1>
 
 <!-- play.html.erb または show_result.html.erb -->
 <% if @correct_answer && @correct_answer[:preview_url].present? %>
-  <p class="text-lg mb-2">曲を再生してみましょう:</p>
+  <p class="bg-customred">この曲のタイトルはなんでしょう？</p>
   <audio controls class="mb-4">
     <source src="<%= @correct_answer[:preview_url] %>" type="audio/mpeg">
     Your browser does not support the audio element.
@@ -15,8 +15,6 @@
 
 
     <!-- クイズの選択肢表示部分 -->
-    <div id="quiz-options" class="mb-6">
-      <p class="text-lg mb-4">この曲のタイトルはどれでしょう？</p>
       <% if @options.present? %>
         <%= form_with url: show_result_path, method: :get, local: true do |form| %>
           <% @options.each do |option| %>

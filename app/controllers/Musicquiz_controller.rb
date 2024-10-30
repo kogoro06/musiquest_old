@@ -2,23 +2,25 @@ class MusicquizController < ApplicationController
   before_action :refresh_spotify_token, only: [:play, :start]
 
   # playアクション
-  def play
-    session[:current_question] ||= 1
-    session[:genre] ||= 'アニメ'
-    question = QuizHelper.setup_new_question(session[:genre])
+def play
+  session[:current_question] ||= 1
+  session[:genre] ||= 'アニメ'
+  question = QuizHelper.setup_new_question(session[:genre])
 
-    if question
-      session[:correct_answer] = question[:correct_answer] # 正解データをセッションに保存
-      @options = question[:options]
+  if question
+    session[:correct_answer] = question[:correct_answer] # 正解データをセッションに保存
+    @correct_answer = session[:correct_answer] # @correct_answerに正解データを設定
+    @options = question[:options]
 
-      # デバッグログで確認
-      Rails.logger.debug("play - セッションに保存する正解データ: #{session[:correct_answer].inspect}")
-      Rails.logger.debug("play - 現在の問題番号: #{session[:current_question]}")
-    else
-      flash.now[:alert] = "十分な数の曲を取得できませんでした。再試行してください。"
-      render :play and return
-    end
+    # デバッグログで確認
+    Rails.logger.debug("play - セッションに保存する正解データ: #{session[:correct_answer].inspect}")
+    Rails.logger.debug("play - 現在の問題番号: #{session[:current_question]}")
+  else
+    flash.now[:alert] = "十分な数の曲を取得できませんでした。再試行してください。"
+    render :play and return
   end
+end
+
 
   # show_resultアクション
   def show_result
