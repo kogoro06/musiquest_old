@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get "musicquiz/era", to: "musicquiz#era", as: :musicquiz_era
   get "musicquiz/ranking", to: "musicquiz#ranking", as: :musicquiz_ranking
   get "musicquiz/playlist", to: "musicquiz#playlist", as: :musicquiz_playlist
+  get 'musicquiz/play/:genre', to: 'musicquiz#play', as: :musicquiz_play
 
   # お気に入り登録機能のルート
 
